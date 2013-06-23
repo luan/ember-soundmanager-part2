@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/javascripts/lib/jquery-1.9.1.js"></script>
+    <script src="/javascripts/lib/handlebars.js"></script>
+    <script src="/javascripts/lib/ember-1.0.0-rc.5.js"></script>
+    <script src="/javascripts/lib/ember-data-0.13.js"></script>
+    <script src="/javascripts/lib/bootstrap.js"></script>
+    <script src="/javascripts/lib/soundmanager2.js"></script>
+    <script src="/javascripts/sound_player.js"></script>
+    <script src="/javascripts/app.js"></script>
+    <link href="/stylesheets/lib/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/lib/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+    <meta charset=utf-8 />
+    <title>Ember - SoundManager</title>
+  </head>
+<body>
+  <script type="text/x-handlebars">
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav">
+              <li class="active">{{#linkTo 'songs'}}Songs{{/linkTo}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {{outlet}}
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="songs">
+    {{#each model}}
+      Path: {{url}}
+      {{#linkTo 'song' this}}Listen{{/linkTo}}
+    {{/each}}
+  </script>
+
+  <script type="text/x-handlebars" id="song">
+    {{soundPlayer url=url}}
+  </script>
+
+  <script type="text/x-handlebars" id="soundplayer">
+    <p>{{view.position}} of {{view.duration}}</p>
+    <button class="btn" {{action 'toggle' target="view"}}>{{view.playPauseLink}}</button>
+    <button class="btn" {{action 'stop' target="view"}} {{bindAttr disabled="view.isStopped"}}>Stop</button>
+  </script>
+</body>
+</html>
